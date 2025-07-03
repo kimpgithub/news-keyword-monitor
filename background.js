@@ -110,16 +110,28 @@ async function startMonitoring() {
     // 즉시 한 번 체크
     await checkNews();
     
+    // 기존 알람 제거
+    await chrome.alarms.clear('newsCheck');
+    
     // 주기적 체크 설정
-    chrome.alarms.create('newsCheck', { 
+    const alarmInfo = {
         delayInMinutes: checkInterval / 60000,
         periodInMinutes: checkInterval / 60000 
-    });
+    };
+    
+    console.log('알람 설정:', alarmInfo);
+    await chrome.alarms.create('newsCheck', alarmInfo);
+    
+    // 알람이 제대로 설정되었는지 확인
+    const alarms = await chrome.alarms.getAll();
+    console.log('현재 설정된 알람들:', alarms);
 }
 
 // 알람 이벤트 처리
 chrome.alarms.onAlarm.addListener(async (alarm) => {
+    console.log('알람 트리거됨:', alarm);
     if (alarm.name === 'newsCheck') {
+        console.log('뉴스 체크 알람 실행');
         await checkNews();
     }
 });
@@ -161,7 +173,7 @@ async function checkNews() {
         }
 
         // 체크 간격 조정
-        adjustCheckInterval(foundNewNews);
+        await adjustCheckInterval(foundNewNews);
         
         // 팝업에 상태 업데이트 알림
         broadcastMessage({ action: 'statusChanged' });
@@ -172,7 +184,7 @@ async function checkNews() {
 
     } catch (error) {
         console.error('뉴스 확인 실패:', error);
-        adjustCheckInterval(false);
+        await adjustCheckInterval(false);
     }
 }
 
@@ -412,7 +424,7 @@ async function sendNotifications(articles, keyword) {
 }
 
 // 체크 간격 동적 조정
-function adjustCheckInterval(foundNews) {
+async function adjustCheckInterval(foundNews) {
     if (foundNews) {
         // 새 뉴스 발견 시 간격 단축
         checkInterval = Math.max(minInterval, checkInterval * 0.5);
@@ -424,11 +436,18 @@ function adjustCheckInterval(foundNews) {
     console.log(`체크 간격 조정됨: ${Math.round(checkInterval / 60000)}분`);
     
     // 알람 재설정
-    chrome.alarms.clear('newsCheck');
-    chrome.alarms.create('newsCheck', { 
+    await chrome.alarms.clear('newsCheck');
+    const alarmInfo = {
         delayInMinutes: checkInterval / 60000,
         periodInMinutes: checkInterval / 60000 
-    });
+    };
+    
+    console.log('알람 재설정:', alarmInfo);
+    await chrome.alarms.create('newsCheck', alarmInfo);
+    
+    // 알람이 제대로 설정되었는지 확인
+    const alarms = await chrome.alarms.getAll();
+    console.log('재설정된 알람들:', alarms);
 }
 
 // 유틸리티 함수들
