@@ -8,7 +8,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     
     if (message.type === 'parse-rss') {
-        setTimeout(() => {
+        // 비동기 응답을 위해 true 반환
+        (async () => {
             try {
                 // RSS XML 파싱
                 const parser = new DOMParser();
@@ -42,29 +43,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 
                 console.log(`Parsed ${articles.length} articles for keyword: ${message.keyword}`);
                 
-                // 성공 응답 전송
-                chrome.runtime.sendMessage({
-                    type: 'rss-parsed',
-                    keyword: message.keyword,
+                // sendResponse를 통해 직접 응답
+                sendResponse({
+                    success: true,
                     articles: articles
-                }).catch(error => {
-                    console.error('Failed to send rss-parsed message:', error);
                 });
                 
             } catch (error) {
                 console.error('RSS parsing error:', error);
                 
-                // 오류 응답 전송
-                chrome.runtime.sendMessage({
-                    type: 'rss-parse-error',
-                    keyword: message.keyword,
+                // 오류 응답
+                sendResponse({
+                    success: false,
                     error: error.message
-                }).catch(error => {
-                    console.error('Failed to send rss-parse-error message:', error);
                 });
             }
-        }, 0);
-        return false;
+        })();
+        
+        return true; // 비동기 응답을 위해 true 반환
     }
     
     return false; // 다른 메시지 타입은 처리하지 않음

@@ -223,39 +223,20 @@ async function fetchNewsForKeyword(keyword) {
                 throw new Error('Offscreen document not ready');
             }
             
-            parsedArticles = await new Promise((resolve, reject) => {
-                const timeout = setTimeout(() => {
-                    chrome.runtime.onMessage.removeListener(messageListener);
-                    reject(new Error('RSS parsing timeout'));
-                }, 20000); // 20초로 타임아웃 증가
-                
-                const messageListener = (message) => {
-                    if (message.type === 'rss-parsed' && message.keyword === keyword) {
-                        chrome.runtime.onMessage.removeListener(messageListener);
-                        clearTimeout(timeout);
-                        resolve(message.articles);
-                    } else if (message.type === 'rss-parse-error' && message.keyword === keyword) {
-                        chrome.runtime.onMessage.removeListener(messageListener);
-                        clearTimeout(timeout);
-                        reject(new Error(message.error));
-                    }
-                };
-                
-                chrome.runtime.onMessage.addListener(messageListener);
-                
-                // offscreen에 파싱 요청
-                chrome.runtime.sendMessage({
-                    target: 'offscreen',
-                    type: 'parse-rss',
-                    xmlText: xmlText,
-                    keyword: keyword
-                }).catch(error => {
-                    console.error('Failed to send message to offscreen:', error);
-                    chrome.runtime.onMessage.removeListener(messageListener);
-                    clearTimeout(timeout);
-                    reject(error);
-                });
+            // 직접 메시지 전송 및 응답 대기
+            const response = await chrome.runtime.sendMessage({
+                target: 'offscreen',
+                type: 'parse-rss',
+                xmlText: xmlText,
+                keyword: keyword
             });
+            
+            if (response && response.success) {
+                parsedArticles = response.articles;
+            } else {
+                throw new Error(response?.error || 'RSS parsing failed');
+            }
+            
         } catch (offscreenError) {
             console.warn('Offscreen 파싱 실패:', offscreenError);
             // 오프스크린 문서가 실패하면 더 이상 직접 파싱 시도하지 않고, 빈 배열 반환
@@ -616,43 +597,6 @@ chrome.notifications.onButtonClicked.addListener(async (notificationId, buttonIn
     } catch (error) {
         console.error('알림 버튼 클릭 처리 실패:', error);
     }
-});
-
-// 메시지 처리도 안전하게 수정
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    (async () => {
-        try {
-            switch (message.action) {
-                case 'getStatus':
-                    sendResponse({
-                        isActive: isMonitoring,
-                        lastCheck: lastCheckTime,
-                        checkInterval: Math.round(checkInterval / 60000)
-                    });
-                    break;
-                    
-                case 'forceCheck':
-                    await checkNews();
-                    sendResponse({ success: true });
-                    break;
-                    
-                case 'keywordsUpdated':
-                    console.log('키워드 업데이트됨:', message.keywords);
-                    // 키워드 변경 시 즉시 체크
-                    setTimeout(checkNews, 1000);
-                    break;
-                    
-                case 'settingsUpdated':
-                    console.log('설정 업데이트됨:', message.settings);
-                    break;
-            }
-        } catch (error) {
-            console.error('메시지 처리 실패:', error);
-            sendResponse({ error: error.message });
-        }
-    })();
-    
-    return true; // 비동기 응답을 위해 true 반환
 });
 
 // broadcastMessage 함수도 안전하게 수정
