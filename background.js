@@ -257,10 +257,9 @@ async function fetchNewsForKeyword(keyword) {
                 });
             });
         } catch (offscreenError) {
-            console.warn('Offscreen 파싱 실패, 직접 파싱 시도:', offscreenError);
-            
-            // Offscreen 실패 시 직접 파싱 시도
-            parsedArticles = parseRSSDirectly(xmlText);
+            console.warn('Offscreen 파싱 실패:', offscreenError);
+            // 오프스크린 문서가 실패하면 더 이상 직접 파싱 시도하지 않고, 빈 배열 반환
+            return [];
         }
 
         const articles = [];
@@ -293,47 +292,6 @@ async function fetchNewsForKeyword(keyword) {
         
     } catch (error) {
         console.error(`키워드 뉴스 가져오기 실패 (${keyword}):`, error);
-        return [];
-    }
-}
-
-// 직접 RSS 파싱 함수 (Offscreen 실패 시 대체)
-function parseRSSDirectly(xmlText) {
-    try {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlText, 'text/xml');
-        
-        // 파싱 오류 체크
-        const parserError = xmlDoc.querySelector('parsererror');
-        if (parserError) {
-            throw new Error('XML parsing failed: ' + parserError.textContent);
-        }
-        
-        // RSS 아이템들 추출
-        const items = xmlDoc.querySelectorAll('item');
-        const articles = [];
-        
-        items.forEach(item => {
-            const title = item.querySelector('title')?.textContent || '';
-            const link = item.querySelector('link')?.textContent || '';
-            const pubDate = item.querySelector('pubDate')?.textContent || '';
-            const source = item.querySelector('source')?.textContent || 'Google News';
-            
-            if (title && link) {
-                articles.push({
-                    title: title.trim(),
-                    link: link.trim(),
-                    pubDate: pubDate.trim(),
-                    source: source.trim()
-                });
-            }
-        });
-        
-        console.log(`직접 파싱으로 ${articles.length}개 기사 추출`);
-        return articles;
-        
-    } catch (error) {
-        console.error('직접 RSS 파싱 실패:', error);
         return [];
     }
 }
