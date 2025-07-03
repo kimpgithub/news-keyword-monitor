@@ -8,10 +8,6 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     }
     
     if (message.type === 'parse-rss') {
-        // 즉시 응답하여 비동기 처리 시작을 알림
-        sendResponse({ status: 'processing' });
-        
-        // 비동기로 RSS 파싱 처리
         setTimeout(() => {
             try {
                 // RSS XML 파싱
@@ -68,8 +64,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                 });
             }
         }, 0);
-        
-        return true; // 비동기 응답 표시
+        return false;
     }
     
     return false; // 다른 메시지 타입은 처리하지 않음
