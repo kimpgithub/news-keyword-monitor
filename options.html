@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>뉴스 키워드 모니터 - 옵션</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>옵션</h1>
+        </header>
+
+        <main>
+            <section class="settings-section">
+                <h2>모니터링 설정</h2>
+                <div class="form-group">
+                    <label for="checkInterval">확인 주기 (분)</label>
+                    <input type="number" id="checkInterval" min="3" max="60">
+                    <small>뉴스 확인 간격 (3분 ~ 60분)</small>
+                </div>
+                <div class="form-group">
+                    <label for="duplicateThreshold">중복 임계값</label>
+                    <input type="range" id="duplicateThreshold" min="0.5" max="1.0" step="0.05">
+                    <span id="thresholdValue">0.8</span>
+                    <small>유사한 뉴스 필터링 강도 (높을수록 엄격)</small>
+                </div>
+            </section>
+
+            
+
+            <section class="data-section">
+                <h2>데이터 관리</h2>
+                <div class="form-group">
+                    <label>키워드 가져오기/내보내기</label>
+                    <div class="button-group">
+                        <button id="importBtn" class="btn-secondary">가져오기</button>
+                        <button id="exportBtn" class="btn-secondary">내보내기</button>
+                    </div>
+                    <small>키워드 목록을 파일로 저장하거나 불러옵니다.</small>
+                </div>
+                <div class="form-group">
+                    <label>모든 데이터 삭제</label>
+                    <button id="clearDataBtn" class="btn-danger">데이터 삭제</button>
+                    <small>저장된 모든 키워드와 뉴스 데이터를 삭제합니다.</small>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <button id="saveBtn" class="btn-primary">저장</button>
+            <div id="statusMessage"></div>
+        </footer>
+    </div>
+    <script src="options.js"></script>
+</body>
+</html>

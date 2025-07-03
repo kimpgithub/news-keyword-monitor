@@ -1,0 +1,134 @@
+{
+  "appName": {
+    "message": "뉴스 키워드 모니터",
+    "description": "확장프로그램 이름"
+  },
+  "appDescription": {
+    "message": "설정한 키워드에 대한 뉴스를 모니터링하고 새로운 기사가 발행될 때 실시간 알림을 받으세요.",
+    "description": "확장프로그램 설명"
+  },
+  "keywordManagement": {
+    "message": "키워드 관리",
+    "description": "키워드 관리 섹션 제목"
+  },
+  "addKeywordPlaceholder": {
+    "message": "새 키워드 추가",
+    "description": "키워드 입력 필드 플레이스홀더"
+  },
+  "addButton": {
+    "message": "추가",
+    "description": "추가 버튼 텍스트"
+  },
+  "recentNews": {
+    "message": "최근 뉴스",
+    "description": "최근 뉴스 섹션 제목"
+  },
+  "noNews": {
+    "message": "새로운 뉴스가 없습니다.",
+    "description": "뉴스가 없을 때 메시지"
+  },
+  "quickSettings": {
+    "message": "빠른 설정",
+    "description": "빠른 설정 섹션 제목"
+  },
+  "enableNotifications": {
+    "message": "알림 사용",
+    "description": "알림 토글 레이블"
+  },
+  "enableSound": {
+    "message": "소리 알림 사용",
+    "description": "소리 토글 레이블"
+  },
+  "options": {
+    "message": "옵션",
+    "description": "옵션 버튼 텍스트"
+  },
+  "refresh": {
+    "message": "새로고침",
+    "description": "새로고침 버튼 텍스트"
+  },
+  "refreshing": {
+    "message": "새로고침 중...",
+    "description": "새로고침 중 상태 텍스트"
+  },
+  "status": {
+    "message": "상태",
+    "description": "상태 레이블"
+  },
+  "active": {
+    "message": "활성",
+    "description": "활성 상태"
+  },
+  "inactive": {
+    "message": "비활성",
+    "description": "비활성 상태"
+  },
+  "justNow": {
+    "message": "방금 전",
+    "description": "최근 활동 시간 표시"
+  },
+  "minutesAgo": {
+    "message": "$COUNT$분 전",
+    "description": "분 단위 시간 표시",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "hoursAgo": {
+    "message": "$COUNT$시간 전",
+    "description": "시간 단위 시간 표시",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "daysAgo": {
+    "message": "$COUNT$일 전",
+    "description": "일 단위 시간 표시",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "keywordAdded": {
+    "message": "키워드가 추가되었습니다.",
+    "description": "키워드 추가 성공 메시지"
+  },
+  "keywordRemoved": {
+    "message": "키워드가 삭제되었습니다.",
+    "description": "키워드 삭제 성공 메시지"
+  },
+  "duplicateKeyword": {
+    "message": "이미 추가된 키워드입니다.",
+    "description": "중복 키워드 오류 메시지"
+  },
+  "enterKeyword": {
+    "message": "키워드를 입력해주세요.",
+    "description": "빈 키워드 오류 메시지"
+  },
+  "keywordTooLong": {
+    "message": "키워드가 너무 깁니다. 50자 이내로 입력해주세요.",
+    "description": "긴 키워드 오류 메시지"
+  },
+  "newNewsFound": {
+    "message": "$KEYWORD$ 관련 새 뉴스 $COUNT$개 발견!",
+    "description": "새 뉴스 알림 메시지",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      },
+      "keyword": {
+        "content": "$2",
+        "example": "기술"
+      }
+    }
+  }
+}

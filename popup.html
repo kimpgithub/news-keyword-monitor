@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="extNameTitle">뉴스 키워드 모니터</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1 id="popupTitleElement">뉴스 키워드 모니터</h1>
+            <div class="status-indicator">
+                <span class="status-dot" id="statusDot"></span>
+                <span class="status-text" id="statusText"></span>
+            </div>
+        </div>
+
+        <!-- 키워드 관리 섹션 -->
+        <div class="section">
+            <h3 id="keywordManagementTitle">키워드 관리</h3>
+            <div class="keyword-input-container">
+                <input type="text" id="keywordInput" placeholder="새 키워드 추가" maxlength="50">
+                <button id="addKeywordBtn" class="btn-primary"><span id="addBtnText">추가</span></button>
+            </div>
+            
+            <div class="keywords-list" id="keywordsList">
+                <!-- 키워드들이 동적으로 추가됩니다 -->
+            </div>
+        </div>
+
+        <!-- 최근 뉴스 섹션 -->
+        <div class="section">
+            <h3 id="recentNewsTitle">최근 뉴스</h3>
+            <div class="recent-news" id="recentNews">
+                <div class="no-news" id="noNewsText">새로운 뉴스가 없습니다.</div>
+            </div>
+        </div>
+
+        <!-- 빠른 설정 -->
+        <div class="section">
+            <h3 id="quickSettingsTitle">빠른 설정</h3>
+            <div class="quick-settings">
+                <label class="toggle-container">
+                    <span id="enableNotificationsLabel">알림 사용</span>
+                    <input type="checkbox" id="notificationToggle" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+                
+                <label class="toggle-container">
+                    <span id="enableSoundLabel">소리 알림 사용</span>
+                    <input type="checkbox" id="soundToggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- 하단 버튼들 -->
+        <div class="footer">
+            <button id="optionsBtn" class="btn-secondary"><span id="optionsBtnText">옵션</span></button>
+            <button id="refreshBtn" class="btn-secondary"><span id="refreshBtnText">새로고침</span></button>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

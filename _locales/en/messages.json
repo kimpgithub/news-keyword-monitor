@@ -1,0 +1,134 @@
+{
+  "appName": {
+    "message": "News Keyword Monitor",
+    "description": "The name of the extension"
+  },
+  "appDescription": {
+    "message": "Monitor news for your keywords and get real-time notifications when relevant articles are published.",
+    "description": "The description of the extension"
+  },
+  "keywordManagement": {
+    "message": "Keyword Management",
+    "description": "Title for keyword management section"
+  },
+  "addKeywordPlaceholder": {
+    "message": "Add new keyword",
+    "description": "Placeholder text for keyword input"
+  },
+  "addButton": {
+    "message": "Add",
+    "description": "Add button text"
+  },
+  "recentNews": {
+    "message": "Recent News",
+    "description": "Title for recent news section"
+  },
+  "noNews": {
+    "message": "No new news available.",
+    "description": "Message when no news is found"
+  },
+  "quickSettings": {
+    "message": "Quick Settings",
+    "description": "Title for quick settings section"
+  },
+  "enableNotifications": {
+    "message": "Enable Notifications",
+    "description": "Label for notification toggle"
+  },
+  "enableSound": {
+    "message": "Enable Sound Alerts",
+    "description": "Label for sound toggle"
+  },
+  "options": {
+    "message": "Options",
+    "description": "Options button text"
+  },
+  "refresh": {
+    "message": "Refresh",
+    "description": "Refresh button text"
+  },
+  "refreshing": {
+    "message": "Refreshing...",
+    "description": "Refreshing status text"
+  },
+  "status": {
+    "message": "Status",
+    "description": "Status label"
+  },
+  "active": {
+    "message": "Active",
+    "description": "Active status"
+  },
+  "inactive": {
+    "message": "Inactive",
+    "description": "Inactive status"
+  },
+  "justNow": {
+    "message": "Just now",
+    "description": "Time indicator for recent activity"
+  },
+  "minutesAgo": {
+    "message": "$COUNT$ minutes ago",
+    "description": "Time indicator for minutes",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "hoursAgo": {
+    "message": "$COUNT$ hours ago",
+    "description": "Time indicator for hours",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "2"
+      }
+    }
+  },
+  "daysAgo": {
+    "message": "$COUNT$ days ago",
+    "description": "Time indicator for days",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      }
+    }
+  },
+  "keywordAdded": {
+    "message": "Keyword added successfully.",
+    "description": "Success message for adding keyword"
+  },
+  "keywordRemoved": {
+    "message": "Keyword removed successfully.",
+    "description": "Success message for removing keyword"
+  },
+  "duplicateKeyword": {
+    "message": "This keyword already exists.",
+    "description": "Error message for duplicate keyword"
+  },
+  "enterKeyword": {
+    "message": "Please enter a keyword.",
+    "description": "Error message for empty keyword"
+  },
+  "keywordTooLong": {
+    "message": "Keyword is too long. Please enter within 50 characters.",
+    "description": "Error message for long keyword"
+  },
+  "newNewsFound": {
+    "message": "$COUNT$ new news found for $KEYWORD$!",
+    "description": "Notification message for new news",
+    "placeholders": {
+      "count": {
+        "content": "$1",
+        "example": "3"
+      },
+      "keyword": {
+        "content": "$2",
+        "example": "technology"
+      }
+    }
+  }
+}
