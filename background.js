@@ -259,11 +259,25 @@ async function fetchNewsForKeyword(keyword) {
         const now = Date.now();
 
         parsedArticles.forEach(item => {
-            // 24시간 이내 뉴스만 처리
-            const publishedAt = item.pubDate ? new Date(item.pubDate).getTime() : now;
+            // 시간 정보가 없거나 잘못된 경우 제외
+            if (!item.pubDate) {
+                console.log(`시간 정보 없음: ${item.title}`);
+                return;
+            }
+            
+            const publishedAt = new Date(item.pubDate).getTime();
+            
+            // 잘못된 날짜 체크 (미래 시간이거나 너무 과거인 경우)
+            if (isNaN(publishedAt) || publishedAt > now || publishedAt < now - (30 * 24 * 60 * 60 * 1000)) {
+                console.log(`잘못된 시간 정보: ${item.title}, pubDate: ${item.pubDate}`);
+                return;
+            }
+            
+            // 1시간 이내 뉴스만 처리
             const hoursDiff = (now - publishedAt) / (1000 * 60 * 60);
             
-            if (hoursDiff <= 24) {
+            if (hoursDiff <= 1) {
+                console.log(`1시간 이내 뉴스 발견: "${item.title}" (${hoursDiff.toFixed(2)}시간 전)`);
                 articles.push({
                     title: item.title,
                     link: item.link,
@@ -273,6 +287,8 @@ async function fetchNewsForKeyword(keyword) {
                     id: generateArticleId(item.title, item.link),
                     normalizedTitle: normalizeTitle(item.title)
                 });
+            } else {
+                console.log(`1시간 초과 뉴스 제외: "${item.title}" (${hoursDiff.toFixed(2)}시간 전)`);
             }
         });
         
